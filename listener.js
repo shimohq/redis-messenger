@@ -11,12 +11,12 @@ class Listener {
       listenerChannel: 'REDIS_LISTENER'
     }));
 
-    if (!this.subRedis) {
-      this.subRedis = new Redis();
+    if (!this.subClient) {
+      this.subClient = new Redis();
     }
 
-    if (!this.pubRedis) {
-      this.pubRedis = new Redis();
+    if (!this.pubClient) {
+      this.pubClient = new Redis();
     }
 
     this.cbPool = {};
@@ -24,8 +24,8 @@ class Listener {
   }
 
   subscribe() {
-    this.subRedis.subscribe(this.speakerChannel);
-    this.subRedis.on('message', (channel, message) => {
+    this.subClient.subscribe(this.speakerChannel);
+    this.subClient.on('message', (channel, message) => {
       message = JSON.parse(message);
 
       if (channel !== this.speakerChannel) {
@@ -38,7 +38,7 @@ class Listener {
         const msg = _.pick(message, ['speakerGuid', 'type', 'processGuid']);
         msg.message = sendMessage;
         debug('listener send', this.listenerChannel);
-        this.pubRedis.publish(this.listenerChannel, JSON.stringify(msg));
+        this.pubClient.publish(this.listenerChannel, JSON.stringify(msg));
       };
 
       if (this.cbPool[type]) {

@@ -14,12 +14,12 @@ class Speaker {
       timeout: 5000
     }));
 
-    if (!this.subRedis) {
-      this.subRedis = new Redis();
+    if (!this.subClient) {
+      this.subClient = new Redis();
     }
 
-    if (!this.pubRedis) {
-      this.pubRedis = new Redis();
+    if (!this.pubClient) {
+      this.pubClient = new Redis();
     }
 
     this.processGuid = Guid.new(16);
@@ -29,9 +29,9 @@ class Speaker {
   }
 
   subscribe() {
-    this.subRedis.subscribe(this.listenerChannel);
+    this.subClient.subscribe(this.listenerChannel);
 
-    this.subRedis.on('message', (channel, data) => {
+    this.subClient.on('message', (channel, data) => {
       data = JSON.parse(data);
 
       debug('speaker GET listener', channel, this.listenerChannel, data, this.processGuid);
@@ -94,7 +94,7 @@ class Speaker {
         done();
       };
 
-      current.getMount = this.pubRedis.publish(
+      current.getMount = this.pubClient.publish(
         this.speakerChannel, JSON.stringify({
           speakerGuid,
           type,
