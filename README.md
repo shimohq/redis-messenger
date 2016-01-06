@@ -1,4 +1,4 @@
-# redis-messenger
+# shimo-messenger
 Insanely Fast Communication Library For Node.js Services Using Redis
 
 ============
@@ -6,9 +6,9 @@ Installation
 
     npm install shimo-messenger
 
-What is redis-messenger
+What is shimo-messenger
 ------------------
-redis-messenger is a library that makes network communication via Redis dead simple and insanely fast!
+shimo-messenger is a library that makes network communication via Redis dead simple and insanely fast!
 It support multi responses and easy to use:
 
 `client.send(data).then(returnArray => console.log(returnArray))`
@@ -16,7 +16,7 @@ It support multi responses and easy to use:
 Example:
 
 ```javascript
-var messenger = require('redis-messenger');
+var messenger = require('shimo-messenger');
 
 client = new messenger.Speaker();
 server = new messenger.Listener();

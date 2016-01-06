@@ -1,6 +1,6 @@
 {
   "name": "shimo-messenger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Insanely Fast Communication Library For Node.js Services Using Redis",
   "main": "index.js",
   "directories": {
