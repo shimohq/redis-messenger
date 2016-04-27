@@ -32,7 +32,11 @@ class Speaker {
     this.subClient.subscribe(this.listenerChannel);
 
     this.subClient.on('message', (channel, data) => {
-      data = JSON.parse(data);
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        return;
+      }
 
       debug('speaker GET listener', channel, this.listenerChannel, data, this.processGuid);
 
@@ -45,11 +49,13 @@ class Speaker {
       }
 
       if (!data.speakerGuid) {
-        throw new Error('speakerGuid required');
+        debug('speakerGuid required');
+        return;
       }
 
       if (!this.dataPool[data.speakerGuid]) {
-        throw new Error('No such speakerGuid');
+        debug('No such speakerGuid');
+        return;
       }
 
       const current = this.dataPool[data.speakerGuid];
