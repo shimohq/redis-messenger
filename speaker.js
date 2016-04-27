@@ -54,7 +54,7 @@ class Speaker {
       }
 
       if (!this.dataPool[data.speakerGuid]) {
-        debug('No such speakerGuid');
+        debug('No such speakerGuid', data);
         return;
       }
 
@@ -117,6 +117,7 @@ class Speaker {
         current.timeout = setTimeout(function () {
           const receivedCount = current.result.length;
           if (receivedCount === 0) {
+            debug('Redisspeaker timeout', message);
             reject(new Error('Redisspeaker timeout'));
           }
           if (receivedCount > 0 && receivedCount < mount) {
