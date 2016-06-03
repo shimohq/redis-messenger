@@ -111,7 +111,7 @@ class Speaker {
 
       current.getMount.then(mount => {
         if (mount === 0) {
-          reject(new Error('No listener'));
+          reject([]);
         }
 
         current.timeout = setTimeout(function () {
