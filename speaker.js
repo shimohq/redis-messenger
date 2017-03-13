@@ -25,11 +25,13 @@ class Speaker {
     this.processGuid = Guid.new(16);
     this.dataPool = {};
 
-    this.subscribe();
+    if (options.autoConnect) {
+      this.subscribe();
+    }
   }
 
   subscribe() {
-    this.subClient.subscribe(this.listenerChannel);
+    const promise = this.subClient.subscribe(this.listenerChannel);
 
     this.subClient.on('message', (channel, data) => {
       try {
@@ -68,6 +70,8 @@ class Speaker {
         }
       });
     });
+
+    return promise;
   }
 
   send(type, message) {
