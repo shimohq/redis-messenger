@@ -1,8 +1,7 @@
 # shimo-messenger
 Insanely Fast Communication Library For Node.js Services Using Redis
 
-============
-Installation
+## Installation
 
     npm install shimo-messenger
 
@@ -18,9 +17,11 @@ Example:
 ```javascript
 var messenger = require('shimo-messenger');
 
-client = new messenger.Speaker();
-server = new messenger.Listener();
-server2 = new messenger.Listener();
+var client = new messenger.Speaker({
+  autoConnect: true
+});
+var server = new messenger.Listener();
+var server2 = new messenger.Listener();
 
 server.on('give it to me', function(message, response){
   response({you: 'get 1'});

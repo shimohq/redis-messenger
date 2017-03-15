@@ -3,12 +3,14 @@
 const Messenger = require('../');
 
 const assert = require('assert');
-const request = new Messenger.Speaker();
+const request = new Messenger.Speaker({
+  autoConnect: true
+});
 const response = new Messenger.Listener();
 const response2 = new Messenger.Listener();
 const response3 = new Messenger.Listener();
 
-describe('TEST', function () {
+describe('shimo-messenger', function () {
 
   it('Listener should get message and Speaker should get response', function (done) {
 

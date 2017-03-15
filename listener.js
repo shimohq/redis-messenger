@@ -2,21 +2,22 @@
 
 const _ = require('lodash');
 const Redis = require('ioredis');
-const debug = require('debug')('messenger');
+const debug = require('debug')('listener');
 
 class Listener {
   constructor(options) {
-    _.assign(this, _.defaults(options || {}, {
+    options = options || {};
+    _.assign(this, _.defaults(options, {
       speakerChannel: 'REDIS_SPEAKER',
       listenerChannel: 'REDIS_LISTENER'
     }));
 
     if (!this.subClient) {
-      this.subClient = new Redis();
+      this.subClient = new Redis(options.redis);
     }
 
     if (!this.pubClient) {
-      this.pubClient = new Redis();
+      this.pubClient = new Redis(options.redis);
     }
 
     this.cbPool = {};
@@ -26,7 +27,11 @@ class Listener {
   subscribe() {
     this.subClient.subscribe(this.speakerChannel);
     this.subClient.on('message', (channel, message) => {
-      message = JSON.parse(message);
+      try {
+        message = JSON.parse(message);
+      } catch (e) {
+        return;
+      }
 
       if (channel !== this.speakerChannel) {
         return;

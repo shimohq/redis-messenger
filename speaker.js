@@ -4,22 +4,23 @@ const _ = require('lodash');
 const Guid = require('shimo-guid');
 const Redis = require('ioredis');
 const Promise = require('bluebird');
-const debug = require('debug')('messenger');
+const debug = require('debug')('speaker');
 
 class Speaker {
   constructor(options) {
-    _.assign(this, _.defaults(options || {}, {
+    options = options || {};
+    _.assign(this, _.defaults(options, {
       speakerChannel: 'REDIS_SPEAKER',
       listenerChannel: 'REDIS_LISTENER',
       timeout: 5000
     }));
 
     if (!this.subClient) {
-      this.subClient = new Redis();
+      this.subClient = new Redis(options.redis);
     }
 
     if (!this.pubClient) {
-      this.pubClient = new Redis();
+      this.pubClient = new Redis(options.redis);
     }
 
     this.processGuid = Guid.new(16);
