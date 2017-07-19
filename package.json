@@ -1,6 +1,6 @@
 {
   "name": "shimo-messenger",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Insanely Fast Communication Library For Node.js Services Using Redis",
   "main": "index.js",
   "directories": {
@@ -26,10 +26,10 @@
   },
   "homepage": "https://github.com/shimohq/redis-messenger",
   "dependencies": {
-    "bluebird": "^3.1.1",
-    "debug": "^2.2.0",
-    "ioredis": "^1.13.2",
-    "lodash": "^3.10.1",
-    "shimo-guid": "^1.0.1"
+    "bluebird": "3.5.0",
+    "debug": "2.2.0",
+    "ioredis": "3.1.1",
+    "lodash": "4.17.4",
+    "shimo-guid": "1.0.2"
   }
 }
